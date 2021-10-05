@@ -74,7 +74,8 @@ class AgVoyController extends AbstractController
         }
         
         return $this->render('region/region_show.html.twig',
-        ['rooms' => $roomsInRegion]
+        ['rooms' => $roomsInRegion,
+         'region' => $region]
         );
     }
 }

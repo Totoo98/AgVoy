@@ -2,15 +2,16 @@
 
 {% block title %}Region #{{ region.id }}{% endblock %}
 
-{% block body %}
+{% block main %}
 
 <h1>Room list</h1>
 <p>Here are all the rooms of the region:</p>
 <ul>
-    {{% for room in rooms %}}
+    {% for room in rooms %}
         <li>
             <a href="/room/{{ room.id }}">{{ room.summary }}</a>
         </li>
+    {% endfor %}
 </ul>
 
 {% endblock %}
