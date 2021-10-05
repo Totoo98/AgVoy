@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Region #{{ region.id }}{% endblock %}
+
+{% block body %}
+
+<h1>Room list</h1>
+<p>Here are all the rooms of the region:</p>
+<ul>
+    {{% for room in rooms %}}
+        <li>
+            <a href="/room/{{ room.id }}">{{ room.summary }}</a>
+        </li>
+</ul>
+
+{% endblock %}

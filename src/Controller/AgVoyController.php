@@ -9,13 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class AgVoyController extends AbstractController
 {
     /**
-     * @Route("/ag/voy", name="ag_voy")
+     * @Route("/index", name="index")
      */
     public function index(): Response
     {
-        return $this->render('ag_voy/index.html.twig', [
-            'controller_name' => 'AgVoyController',
-        ]);
+        return $this->render('index.html.twig');
     }
 
     /**
@@ -35,14 +33,9 @@ class AgVoyController extends AbstractController
         throw $this->createNotFoundException('The room does not exist');
         }
 
-        //$res = '...';
-        //...
-
-        //$res .= '<p/><a href="' . $this->generateUrl('films_index') . '">Back</a>';
-
-        $res = '<p/>' . $room->getSummary() . '</p>';
-
-        return new Response('<html><body>'. $res . '</body></html>');
+        return $this->render('room/room_show.html.twig',
+        [ 'room' => $room ]
+        );
     }
 
 
@@ -63,17 +56,6 @@ class AgVoyController extends AbstractController
         if (!$region) {
         throw $this->createNotFoundException('The region does not exist');
         }
-
-        $htmlpage = '<!DOCTYPE html>
-        <html>
-            <head>
-                <meta charset="UTF-8">
-                <title>Region list!</title>
-            </head>
-            <body>
-                <h1>Room list</h1>
-                <p>Here are all the rooms of the region:</p>
-                <ul>';
         
         $roomRepo = $this->getDoctrine()->getRepository('App:Room');
         $rooms = $roomRepo->findAll();
@@ -82,21 +64,17 @@ class AgVoyController extends AbstractController
         throw $this->createNotFoundException('The rooms does not exist');
         }
 
+        $roomsInRegion = array();
+
         foreach($rooms as $room) {
             if($room->getRegions()->contains($region))
             {
-                $htmlpage .= '<li>
-                 <a href="/room/'.$room->getId().'">'.$room->getSummary().'</a></li>';
+                $roomsInRegion[] = $room;
             }
         }
-        $htmlpage .= '</ul>';
-
-        $htmlpage .= '</body></html>';
         
-        return new Response(
-            $htmlpage,
-            Response::HTTP_OK,
-            array('content-type' => 'text/html')
-            );
+        return $this->render('region/region_show.html.twig',
+        ['rooms' => $roomsInRegion]
+        );
     }
 }
