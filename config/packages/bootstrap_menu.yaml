@@ -1,0 +1,7 @@
+bootstrap_menu:
+  menus:
+    main:
+      items:
+        todos:
+          label: 'Room Index'
+          route: 'room_index'
