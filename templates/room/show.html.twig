@@ -35,6 +35,10 @@
                 <th>Address</th>
                 <td>{{ room.address }}</td>
             </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ vich_uploader_asset(room, 'imageFile') }}"/></td>
+            </tr>
         </tbody>
     </table>
 
