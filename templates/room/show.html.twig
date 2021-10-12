@@ -5,6 +5,16 @@
 {% block main %}
     <h1>Room</h1>
 
+    {% set panier = app.session.get('panier') %}
+    {% dump(panier) %}
+    {% if room.id in panier %}
+    🛒✔️ Ce Couette et Café est dans le panier !
+    <a href="{{ path('room_mark', {'id': room.id}) }}">Cliquez ici pour l'y retirer.</a>
+    {% else %}
+    🛒❌ Ce Couette et Café n'est pas dans le panier.
+    <a href="{{ path('room_mark', {'id': room.id}) }}">Cliquez ici pour l'y ajouter !</a>
+    {% endif %}
+
     <table class="table">
         <tbody>
             <tr>

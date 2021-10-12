@@ -26,6 +26,34 @@ class RoomController extends AbstractController
     }
 
     /**
+     * Mark a room in the panier in the user's session
+     * 
+     * @Route("/cart", name="room_cart", methods={"GET"})
+     */
+    public function showCart(RoomRepository $roomRepository): Response
+    {
+        $panier = $this->get('session')->get('panier');
+        if(!is_array($panier))
+        {
+            $panier = array();
+        }
+
+        $allRooms = $roomRepository->findAll();
+        $rooms = array();
+        foreach($allRooms as $room)
+        {
+            if(in_array($room->getId(), $panier))
+            {
+                $rooms[] = $room;
+            }
+        }
+
+        return $this->render('room/cart.html.twig', [
+            'rooms' => $rooms
+        ]);
+    }
+
+    /**
      * @Route("/new", name="room_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -98,5 +126,37 @@ class RoomController extends AbstractController
         }
 
         return $this->redirectToRoute('room_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * Mark a room in the panier in the user's session
+     * 
+     * @Route("/mark/{id}", name="room_mark", requirements={ "id": "\d+"}, methods={"GET"})
+     */
+    public function markAction(Room $room): Response
+    {
+        dump($room);
+
+        $id = $room->getId();
+
+        $panier = $this->get('session')->get('panier');
+        if(!is_array($panier))
+        {
+            $panier = array();
+        }
+        
+        if (!in_array($id, $panier) ) 
+        {
+            $panier[] = $id;
+        }
+        else
+        {
+            $panier = array_diff($panier, array($id));
+        }
+
+        $this->get('session')->set('panier', $panier);
+
+        return $this->redirectToRoute('room_show', 
+        ['id' => $room->getId()]);
     }
 }

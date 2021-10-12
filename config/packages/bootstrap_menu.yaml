@@ -2,6 +2,9 @@ bootstrap_menu:
   menus:
     main:
       items:
-        todos:
-          label: 'Room Index'
+        rooms:
+          label: 'Room Index 🛏️'
           route: 'room_index'
+        cart:
+          label: 'Cart 🛒'
+          route: 'room_cart'
