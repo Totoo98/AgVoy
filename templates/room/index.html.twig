@@ -30,7 +30,9 @@
                 <td>{{ room.address }}</td>
                 <td>
                     <a href="{{ path('room_show', {'id': room.id}) }}">show</a>
-                    <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
+                    {% if is_granted('ROLE_USER') %}                    
+                        <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

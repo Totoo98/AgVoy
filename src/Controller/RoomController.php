@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 /**
  * @Route("/room")
  */
@@ -55,6 +57,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/new", name="room_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -85,7 +88,7 @@ class RoomController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="room_show", methods={"GET"})
+     * @Route("/{id}", name="room_show", requirements={ "id": "\d+"}, methods={"GET"})
      */
     public function show(Room $room): Response
     {
@@ -95,7 +98,8 @@ class RoomController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="room_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="room_edit", requirements={ "id": "\d+"}, methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Room $room): Response
     {
@@ -115,7 +119,8 @@ class RoomController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="room_delete", methods={"POST"})
+     * @Route("/{id}", name="room_delete", requirements={ "id": "\d+"}, methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Room $room): Response
     {

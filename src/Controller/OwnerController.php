@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 /**
  * @Route("/owner")
  */
@@ -27,6 +29,7 @@ class OwnerController extends AbstractController
 
     /**
      * @Route("/new", name="owner_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -60,6 +63,7 @@ class OwnerController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="owner_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Owner $owner): Response
     {
@@ -80,6 +84,7 @@ class OwnerController extends AbstractController
 
     /**
      * @Route("/{id}", name="owner_delete", methods={"POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Owner $owner): Response
     {

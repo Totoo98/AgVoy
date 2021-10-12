@@ -24,7 +24,11 @@
                 <td>{{ region.country }}</td>
                 <td>
                     <a href="{{ path('region_show', {'id': region.id}) }}">show</a>
+
+                    
+                    {% if is_granted('ROLE_ADMIN') %}   
                     <a href="{{ path('region_edit', {'id': region.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -35,5 +39,7 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_ADMIN') %}   
     <a href="{{ path('region_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

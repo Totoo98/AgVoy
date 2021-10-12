@@ -54,7 +54,11 @@
 
     <a href="{{ path('room_index') }}">back to list</a>
 
-    <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
+    {% if is_granted('ROLE_USER') %}   
+        <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
+    {% endif %}
 
+    {% if is_granted('ROLE_ADMIN') %}   
     {{ include('room/_delete_form.html.twig') }}
+    {% endif %}   
 {% endblock %}
